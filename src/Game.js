@@ -6,6 +6,7 @@ import cloudImage from './img/cloud.png';
 import treeImage from './img/tree.png';
 import stoneImage from './img/stone.png';
 import playerImage from './img/player.png';
+import Jumpable from './spirit/Jumpable';
 
 export class Game {
   constructor(option) {
@@ -21,13 +22,13 @@ export class Game {
     loadImage(playerImage).subscribe(img => {
       const width = 50;
       const height = width * img.height / img.width;
-      this.player = new ImageSpirit(
+      this.player = new Jumpable(new ImageSpirit(
         img,
         this.width * 0.4,
         this.skyHeight - height,
         width,
         height
-      );
+      ), {interval: this.msPerFrame});
     });
   }
 
@@ -150,6 +151,7 @@ export class Game {
 
     if (this.player) {
       this.player.paint(this._ctx);
+      this.player.update();
     }
   }
 

@@ -13,8 +13,9 @@ export default class ImageSpirit extends Spirit {
     }
   }
 
-  update({ vx = 0, viewWidth, loop = true }) {
+  update({ vx = 0, vy = 0, viewWidth, loop = true } = {}) {
     this.x -= vx;
+    this.y += vy;
     if (loop && this.x < -this.width) {
       this.x = viewWidth - this.width;
     }

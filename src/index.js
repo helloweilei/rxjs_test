@@ -21,3 +21,9 @@ btn.onclick = function() {
     gameInstance.start();
   }
 }
+
+document.addEventListener('keydown', (event) => {
+  if (event.keyCode === 32) {
+    gameInstance.player.jump();
+  }
+});

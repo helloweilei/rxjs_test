@@ -18,9 +18,16 @@ btn.onclick = function() {
     gameInstance.stop();
   } else {
     btn.textContent = 'Stop';
+    document.getElementsByClassName('over')[0].style.display = 'none';
     gameInstance.start();
   }
 }
+
+gameInstance.onover = function() {
+  document.getElementsByClassName('over')[0].style.display = 'block';
+  gameInstance.stop();
+  btn.textContent = 'Start';
+};
 
 document.addEventListener('keydown', (event) => {
   if (event.keyCode === 32) {

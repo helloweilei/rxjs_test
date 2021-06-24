@@ -6,7 +6,7 @@ import cloudImage from './img/cloud.png';
 import treeImage from './img/tree.png';
 import stoneImage from './img/stone.png';
 import playerImage from './img/player.png';
-import Jumpable from './spirit/Jumpable';
+import JumpableSpirit from './spirit/Jumpable';
 
 export class Game {
   constructor(option) {
@@ -22,13 +22,14 @@ export class Game {
     loadImage(playerImage).subscribe(img => {
       const width = 50;
       const height = width * img.height / img.width;
-      this.player = new Jumpable(new ImageSpirit(
+      this.player = new JumpableSpirit(
         img,
         this.width * 0.4,
         this.skyHeight - height,
         width,
-        height
-      ), {interval: this.msPerFrame});
+        height,
+        {interval: this.msPerFrame}
+      );
     });
   }
 
@@ -125,6 +126,9 @@ export class Game {
 
   paintAll(clouds, trees, obstacles, { moveSpeed }) {
     this.drawBackground();
+    if (this.checkCollide(obstacles)) {
+      this.onover && this.onover.call(this);
+    }
 
     clouds.forEach(cloud => {
       cloud.paint(this._ctx);
@@ -152,7 +156,7 @@ export class Game {
     if (this.player) {
       this.player.paint(this._ctx);
       this.player.update();
-    }
+    }  
   }
 
   drawBackground() {
@@ -171,5 +175,13 @@ export class Game {
       this.stop$.next();
       this.stop$.complete();
     }
+  }
+
+  checkCollide(obstacles) {
+    const p = this.player;
+    return obstacles.some(o => {
+      return p.x + p.width > o.x && p.x < o.x + o.width &&
+        p.y + p.height > o.y && p.y < o.y + o.height;
+    });
   }
 }

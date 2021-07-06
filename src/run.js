@@ -16,6 +16,9 @@ export default function makeRun(spirit, images) {
       }
       return originalUpdate.call(this, ...args);
     }
+    spirit.setImages = function(_images) {
+      images = _images;
+    }
   }
   return spirit;
 }

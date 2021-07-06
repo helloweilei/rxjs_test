@@ -7,6 +7,7 @@ import treeImage from './img/tree.png';
 import stoneImage from './img/stone.png';
 import playerImage from './img/player.png';
 import JumpableSpirit from './spirit/Jumpable';
+import runnable from './run';
 
 export class Game {
   constructor(option) {
@@ -22,14 +23,14 @@ export class Game {
     loadImage(playerImage).subscribe(img => {
       const width = 50;
       const height = width * img.height / img.width;
-      this.player = new JumpableSpirit(
+      this.player = runnable(new JumpableSpirit(
         img,
         this.width * 0.4,
         this.skyHeight - height,
         width,
         height,
         {interval: this.msPerFrame}
-      );
+      ), []);
     });
   }
 
